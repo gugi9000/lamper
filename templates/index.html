@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% for lamp in lamps %}
+
+    {% if lamp[2] == 'on' %}
+    <a href="/off/{{ lamp[0] }}">
+    <button type="button" class="btn btn-light">{{ lamp[1] }}</button>
+    {% else %}
+    <a href="/on/{{ lamp[0] }}">
+    <button type="button" class="btn btn-dark">{{ lamp[1] }}</button>
+    {% endif %}
+    </a>
+{% endfor %}
+{% endblock %}
