@@ -58,7 +58,7 @@ def find_lamps() -> list:
             res.append([lamp, name, state])
             # print(f"Lamp {lamp} is called {name} and is {state}")
 
-    return res
+    return sorted(res)
 
 
 if __name__ == "__main__":
