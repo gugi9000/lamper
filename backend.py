@@ -4,6 +4,15 @@ from credentials import home
 
 
 def set_lamp_on(lamp, light=True):
+    """
+    Toggle the state of a lamp based in `lamp` and `light`
+    Lamp with id `lamp` is turned on or off.
+    `light` indicates whether or not to turn it on, if false it's turned off.
+    Returns whether the command was send successfully.
+    :param lamp: string
+    :param light: boolean
+    :return: boolean
+    """
     bridge, _, api_key = home.get(home)
     state_url = f"http://{bridge}/api/{api_key}/lights/{lamp}/state/{lamp}"
     on = b"""{
@@ -27,6 +36,10 @@ def set_lamp_on(lamp, light=True):
 
 
 def find_lamps() -> list:
+    """
+    Contacts the Hue controller and query for lamps that a are reachable
+    :return: a list with `id`, `name`, `state`
+    """
     bridge, _, api_key = home.get(home)
     data = urllib.request.urlopen("http://" + bridge + "/api/" + api_key + "/lights/")
     data = data.read().decode("UTF-8")
