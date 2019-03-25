@@ -35,6 +35,10 @@ def set_lamp_on(lamp, light=True):
         # f.reason
 
 
+def name_sort(lst):
+  return lst[1]
+
+
 def find_lamps() -> list:
     """
     Contacts the Hue controller and query for lamps that a are reachable
@@ -58,12 +62,37 @@ def find_lamps() -> list:
             res.append([lamp, name, state])
             # print(f"Lamp {lamp} is called {name} and is {state}")
 
-    return sorted(res)
+    res = sorted(res, key=lambda x: x[1])
+    return res
+
+
+def find_groups() -> list:
+    """
+    Contacts the Hue controller and query for groups
+    :return: list
+    """
+    bridge, _, api_key = home.get(home)
+    data = urllib.request.urlopen("http://" + bridge + "/api/" + api_key + "/groups/")
+    data = data.read().decode("UTF-8")
+    parsed_json = json.loads(data)
+
+    groups = []
+    for group in parsed_json:
+        name = parsed_json[group].get("name")
+        # lamps = parsed_json[group].get("lights")
+        all_on = parsed_json[group].get("state").get('all_on')
+        any_on = parsed_json[group].get("state").get('any_on')
+        groups.append([group[0], name, all_on, any_on])
+
+    res = sorted(groups, key=lambda x: x[1])
+
+    return res
 
 
 if __name__ == "__main__":
-    set_lamp_on("14", False)
+    #set_lamp_on("14", False)
     # for lamp in find_lamps():
     #     # print(lamp)
     #     if lamp[1][0] == "G":
     #         set_lamp_on(lamp[0], True)
+    print(find_groups())

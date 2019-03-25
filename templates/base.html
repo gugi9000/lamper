@@ -11,6 +11,12 @@
     <title>Hue Lamps</title>
   </head>
   <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <form class="form-inline">
+        <a href="/all/on"><button class="btn btn-outline-success" type="button">All on</button></a>
+        <a href="/all/off"><button class="btn btn-outline-secondary" type="button">All off</button></a>
+      </form>
+    </nav>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
