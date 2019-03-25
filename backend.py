@@ -15,12 +15,8 @@ def set_lamp_on(lamp, light=True):
     """
     bridge, _, api_key = home.get(home)
     state_url = f"http://{bridge}/api/{api_key}/lights/{lamp}/state/{lamp}"
-    on = b"""{
-    "on": true
-}"""
-    off = b"""{
-    "on": false
-}"""
+    on = b"""{"on": true}"""
+    off = b"""{"on": false}"""
     if light:
         req = urllib.request.Request(url=state_url, data=on, method="PUT")
     else:
@@ -32,11 +28,6 @@ def set_lamp_on(lamp, light=True):
         return True
     else:
         return False
-        # f.reason
-
-
-def name_sort(lst):
-  return lst[1]
 
 
 def find_lamps() -> list:
