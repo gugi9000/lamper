@@ -1,5 +1,5 @@
 from flask import Flask, flash, redirect, url_for, render_template
-from backend import set_lamp_on, find_lamps, find_groups
+from backend import set_lamp_on, find_lamps, find_groups, get_lamps_by_group
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -39,6 +39,23 @@ def toggle_all(state):
     status = True
     for lamp in lamps:
         res = set_lamp_on(lamp[0], light)
+        if not res:
+            status = False
+
+    if status:
+        flash(f"All lamps toggled!", 'success')
+    else:
+        flash(f"Toggle failed!", 'error')
+    return redirect(url_for('index'))
+
+
+@app.route('/group/<state>/<group_id>')
+def toggle_group(state, group_id):
+    light = True if state == 'on' else False
+    lamps = get_lamps_by_group(group_id)
+    status = True
+    for lamp in lamps:
+        res = set_lamp_on(lamp, light)
         if not res:
             status = False
 

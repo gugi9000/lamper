@@ -23,12 +23,18 @@
         </ul>
     </nav>
     {% for group in groups %}
+        <p>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="/group/on/{{ group[0] }}"><button type="button" class="btn btn-secondary">I</button></a>
+            <a href="/group/off/{{ group[0] }}"><button type="button" class="btn btn-dark">O</button></a>
+        </div>
         {% if group[2] %}
-        <a href="/group/{{ group[0] }}"><button type="button" class="btn btn-light">{{ group[1] }}</button></a>
+        <button type="button" class="btn btn-light">{{ group[1] }}</button>
         {%  elif group[3] %}
-        <a href="/group/{{ group[0] }}"><button type="button" class="btn btn-secondary">{{ group[1] }}</button></a>
+        <button type="button" class="btn btn-secondary">{{ group[1] }}</button>
         {% else %}
-        <a href="/group/{{ group[0] }}"><button type="button" class="btn btn-dark">{{ group[1] }}</button></a>
+        <button type="button" class="btn btn-dark">{{ group[1] }}</button>
         {% endif %}
+        </p>
     {% endfor %}
 {% endblock %}

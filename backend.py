@@ -78,21 +78,36 @@ def find_groups() -> list:
 
     groups = []
     for group in parsed_json:
+        num = group
         name = parsed_json[group].get("name")
         # lamps = parsed_json[group].get("lights")
         all_on = parsed_json[group].get("state").get('all_on')
         any_on = parsed_json[group].get("state").get('any_on')
-        groups.append([group[0], name, all_on, any_on])
+        if name[0] not in 'abcdefghijklmnopqrstuvwxyz':
+            groups.append([num, name, all_on, any_on])
 
     res = sorted(groups, key=lambda x: x[1])
 
     return res
 
 
+def get_lamps_by_group(num) -> list:
+    """
+    Contacts the Hue controller and query group for lamps
+    :return: list
+    """
+    bridge, _, api_key = home.get(home)
+    data = urllib.request.urlopen("http://" + bridge + "/api/" + api_key + "/groups/" + str(num))
+    data = data.read().decode("UTF-8")
+    parsed_json = json.loads(data)
+
+    return parsed_json.get("lights")
+
+
 if __name__ == "__main__":
-    #set_lamp_on("14", False)
+    # set_lamp_on("14", False)
     # for lamp in find_lamps():
     #     # print(lamp)
     #     if lamp[1][0] == "G":
     #         set_lamp_on(lamp[0], True)
-    print(find_groups())
+    print(get_lamps_by_group(1))
