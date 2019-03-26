@@ -14,7 +14,7 @@ def set_lamp_on(lamp, light=True):
     :return: boolean
     """
     bridge, _, api_key = home.get(home)
-    state_url = f"http://{bridge}/api/{api_key}/lights/{lamp}/state/{lamp}"
+    state_url = f"http://{bridge}/api/{api_key}/lights/{lamp}/state/"
     on = b"""{"on": true}"""
     off = b"""{"on": false}"""
     if light:
